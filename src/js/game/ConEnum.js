@@ -7,6 +7,12 @@
  */
 function ConEnum() {
 	/**
+	 * 联网对战模式的后台服务器地址
+	 */
+	const SERVER_URL = "http://localhost:4000/chess";
+	//const SERVER_URL = "https://chengxg.leanapp.cn/chess";
+
+	/**
 	 * 阵营
 	 * @enum
 	 */
@@ -226,6 +232,7 @@ function ConEnum() {
 	}
 
 	const obj = new Object();
+	obj.SERVER_URL = SERVER_URL;
 	obj.CAMP = CAMP;
 	obj.LOGINS_TATUS = LOGINS_TATUS;
 	obj.PLAYER_ROLE = PLAYER_ROLE;

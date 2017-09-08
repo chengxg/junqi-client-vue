@@ -48,12 +48,8 @@ var Mediator = (function() {
 	 * 初始化websocket
 	 */
 	Mediator.prototype.netSocketInit = function() {
-
 		if(!this.socket) {
-			//let serverUrl = "http://localhost:4000/chess";
-			let serverUrl = "https://chengxg.leanapp.cn/chess";
-
-			this.socket = io.connect(serverUrl);
+			this.socket = io.connect(CON.SERVER_URL);
 			this.action.initSocketEvent(this.socket);
 		}
 	}
