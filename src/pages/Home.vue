@@ -11,9 +11,10 @@
 		<div class="page-layer">
 			<div style="position: absolute;left: 50%;top:20%;transform: translate(-50%, -50%);">
 				<h2>工兵扛军旗</h2>
+				<h6><a href="http://junqi.chengxg.site" class="my-a">http://junqi.chengxg.site</a></h6>
 			</div>
 		</div>
-		<div class="page-layer">
+		<div class="page-layer pointer-events-through">
 			<div class="home-btn-group">
 				<div class="w3-row w3-padding-8">
 					<Vlink href="/localplay">
