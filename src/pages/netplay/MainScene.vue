@@ -37,6 +37,7 @@
 			if(!this.$root.state.net.scene) {
 				let mediator = new Mediator();
 				let scene = new MainScene(mediator);
+				scene.initScene();
 				mediator.scene = scene;
 				mediator.netServerInit();
 				this.$root.state.net.scene = scene;

@@ -3,6 +3,7 @@
 		<SceneMenu v-if="dialogManage.menu.show"></SceneMenu>
 		<PersonalCenter v-if="dialogManage.personalCenter.show"></PersonalCenter>
 		<Chat v-if="dialogManage.chat.show"></Chat>
+		<GameSetting v-if="dialogManage.gameSetting.show"></GameSetting>
 		<FriendRoom v-if="dialogManage.friendRoom.show"></FriendRoom>
 		<RuleInfo v-if="dialogManage.ruleInfo.show"></RuleInfo>
 		<SuePeace v-if="dialogManage.suePeace.show"></SuePeace>
@@ -27,6 +28,7 @@
 	import SearchRoom from './dialog/SearchRoom'
 	import PersonalCenter from './dialog/PersonalCenter'
 	import Victory from './dialog/Victory'
+	import GameSetting from './dialog/GameSetting'
 
 	export default {
 		data() {
@@ -54,7 +56,8 @@
 			PersonalCenter,
 			Victory,
 			Chat,
-			FriendRoom
+			FriendRoom,
+			GameSetting
 		}
 	}
 </script>

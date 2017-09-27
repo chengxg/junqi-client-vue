@@ -58,6 +58,7 @@
 					chess.clickChess(e);
 				}, false);
 			}
+			this.chess.el = this.$el;
 		},
 		methods: {
 			clickChess: function(e) {
@@ -66,6 +67,11 @@
 					e.stopPropagation();
 					this.chess.clickChess();
 				}
+			}
+		},
+		watch: {
+			chess:function(newChess){
+				newChess.el = this.$el;
 			}
 		},
 		components: {

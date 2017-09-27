@@ -2,6 +2,7 @@
 	<div class="page-layer pointer-events-through">
 		<SceneMenu v-if="dialogManage.menu.show"></SceneMenu>
 		<RoomCreate v-show="dialogManage.roomCreate.show"></RoomCreate>
+		<GameSetting v-if="dialogManage.gameSetting.show"></GameSetting>
 		<RoomInfo v-if="dialogManage.roomInfo.show"></RoomInfo>
 		<SuePeace v-if="dialogManage.suePeace.show"></SuePeace>
 		<GiveUp v-if="dialogManage.giveUp.show"></GiveUp>
@@ -18,6 +19,7 @@
 	import SuePeace from './dialog/SuePeace'
 	import GiveUp from './dialog/GiveUp'
 	import Victory from './dialog/Victory'
+	import GameSetting from './dialog/GameSetting'
 
 	export default {
 		data() {
@@ -40,7 +42,8 @@
 			RuleInfo,
 			SuePeace,
 			GiveUp,
-			Victory
+			Victory,
+			GameSetting
 		}
 	}
 </script>

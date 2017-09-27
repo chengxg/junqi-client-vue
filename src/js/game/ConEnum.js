@@ -9,8 +9,8 @@ function ConEnum() {
 	/**
 	 * 联网对战模式的后台服务器地址
 	 */
-	const SERVER_URL = "http://localhost:4000/chess";
-	//const SERVER_URL = "https://chengxg.leanapp.cn/chess";
+	//const SERVER_URL = "http://localhost:4000/chess";
+	const SERVER_URL = "https://chengxg.leanapp.cn/chess";
 
 	/**
 	 * 阵营
@@ -198,6 +198,15 @@ function ConEnum() {
 		bomb: 2, //炸
 		capture: 3 //捕获
 	}
+	
+	/**
+	 * 游戏动画实现类型
+	 * @enum
+	 */
+	const ANIMATION_TYPE = {
+		css : "css",
+		js : "js"
+	}
 
 	/**
 	 * 得到相反的阵营
@@ -244,6 +253,7 @@ function ConEnum() {
 	obj.MOVE_TYPE = MOVE_TYPE;
 	obj.KILL_TYPE = KILL_TYPE;
 	obj.XINGYING_POSITION = XINGYING_POSITION;
+	obj.ANIMATION_TYPE = ANIMATION_TYPE;
 	obj.isNextPosition = isNextPosition;
 	obj.getOppositeCamp = getOppositeCamp;
 

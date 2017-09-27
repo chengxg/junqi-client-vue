@@ -9,6 +9,12 @@
 					<div class="menu-desc">重新开始</div>
 				</div>
 			</div>
+			<div v-if="" class="w3-col s3 menu-cell">
+				<div class="w3-card" @click="openDialog('ruleInfo')">
+					<i class="fa fa-sticky-note-o menu-icon"></i>
+					<div class="menu-desc">游戏规则</div>
+				</div>
+			</div>
 			<div v-if="isShowSuePeace" class="w3-col s3 menu-cell">
 				<div class="w3-card" @click="openSuePeace">
 					<i class="fa fa-meh-o menu-icon"></i>
@@ -22,9 +28,9 @@
 				</div>
 			</div>
 			<div v-if="" class="w3-col s3 menu-cell">
-				<div class="w3-card" @click="openDialog('ruleInfo')">
-					<i class="fa fa-sticky-note-o menu-icon"></i>
-					<div class="menu-desc">游戏规则</div>
+				<div class="w3-card" @click="openDialog('gameSetting')">
+					<i class="fa fa-cog menu-icon"></i>
+					<div class="menu-desc">游戏设置</div>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,6 @@
 'use strict';
 import CBP from './../../ChessboardPara'
+import BC from './../../BrowseCompatibility'
 import CON from './../../ConEnum'
 import Chess from './Chess'
 import gameSound from './GameSound'
@@ -300,9 +301,10 @@ var ChessGroup = (function() {
 	/**
 	 * 在棋盘上，该棋子组获取焦点
 	 */
-	ChessGroup.prototype.acquireFocus = function() {
-		this.scene.acquireChessGroupFocus(this);
+	ChessGroup.prototype.acquireFocus = function(callback) {
+		this.scene.acquireChessGroupFocus(this, callback);
 	};
+	
 	/**
 	 * 隐藏棋子选择面板
 	 */
@@ -318,8 +320,6 @@ var ChessGroup = (function() {
 	 * @param {Function} callback 棋子组移动完成后的回调
 	 */
 	ChessGroup.prototype.moveChessUseJs = function(targetLoc, path, selectChessArr, callback) {
-		this.setSelectChessArr(selectChessArr);
-		this.acquireFocus();
 		let chessGroup = this;
 		let startTime = new Date(),
 			diffframetime = 0; // 上一帧动画的时间，   两帧时间差
@@ -343,12 +343,15 @@ var ChessGroup = (function() {
 		}
 		//运动方程 s = A * (1 - Math.cos(ω * t))
 		//速度为正弦函数，运动的路程为余弦函数
-		let T = 200 + len * 50; //运行总时间
+		let T = 400 + len * 50; //运行总时间
 		let A = pathPixelLength / 2; //运动方程振幅
 		let ω = Math.PI / T; //运动方程的频率参数
-
-		//执行移动
-		executeMove();
+		
+		this.acquireFocus(function(){
+			chessGroup.setSelectChessArr(selectChessArr);
+			//执行移动
+			executeMove();
+		});
 
 		function executeMove(event) {
 			let now = new Date();
@@ -381,8 +384,10 @@ var ChessGroup = (function() {
 						//改变 被选择的棋子位置
 						chessGroup.chessShapeArr.forEach(function(chess, i) {
 							if(chess.isSelect) {
-								chess.x = startXPixel + dx - chessGroup.x - 4 * i - chess.width / 2;
-								chess.y = startYPixel + dy - chessGroup.y - 4 * i - chess.height / 2;
+								let x = startXPixel + dx - chessGroup.x - 4 * i - chess.width / 2;
+								let y = startYPixel + dy - chessGroup.y - 4 * i - chess.height / 2;
+								let transform = "translate3d(" + x + "px," + y + "px,0)";
+								chess.el.style.transform = transform;
 							}
 						});
 						break;
@@ -408,8 +413,6 @@ var ChessGroup = (function() {
 	 * @param {Function} callback 棋子组移动完成后的回调
 	 */
 	ChessGroup.prototype.moveChessUseCss = function(targetLoc, path, selectChessArr, callback) {
-		this.setSelectChessArr(selectChessArr);
-		this.acquireFocus();
 		let chessGroup = this;
 		let startTime = new Date(),
 			diffframetime = 0; // 上一帧动画的时间，   两帧时间差
@@ -436,10 +439,11 @@ var ChessGroup = (function() {
 		let sum = 0;
 
 		//运动方程 s = A * (1 - Math.cos(ω * t))
-		let T = 400 + len * 25; //运行总时间
+		let T = 400 + len * 20; //运行总时间
 		let A = pathPixelLength / 2; //运动方程振幅
 		let ω = Math.PI / T; //运动方程的频率参数
 
+		//计算动画关键帧规则
 		for(let i = 0; i < len; i++) {
 			if((i + 1) < len) {
 				startXPixel = CBP.getPixelByLocX(path[i] % 5);
@@ -486,63 +490,44 @@ var ChessGroup = (function() {
 		try {
 			//得到 动画的样式表
 			let sheet = document.getElementById("chessMoveStyle").sheet;
-			let prefixAnimation = getPrefixAnimation();
+			let prefixAnimation = BC.prefixCss3Animation;
 			sheet.deleteRule(0); //先删除原先的动画样式
 			sheet.deleteRule(0);
 			//添加新的运动规则
-			addCSSRule(sheet, "@" + prefixAnimation + "keyframes chess-move", keyFrame, 0);
+			BC.addCSSRule(sheet, "@" + prefixAnimation + "keyframes chess-move", keyFrame, 0);
 			let chessMoveCssClass = "-webkit-animation: chess-move linear " + T + "ms;" +
 				"animation: chess-move linear " + T + "ms;";
-			addCSSRule(sheet, ".move", chessMoveCssClass, 1);
+			BC.addCSSRule(sheet, ".move", chessMoveCssClass, 1);
 		} catch(e) {
 
 		}
-		let delayTime = 100; //延时ms，等待css加载完毕
-		setTimeout(function() {
-			//运动完成后回调
-			if(callback && typeof callback === 'function') {
-				callback();
-			}
-		}, T + delayTime - 5);
-		setTimeout(function() {
+
+		let delayTime = 80; //延时ms，等待css加载完毕
+		
+		this.acquireFocus(function(){
+			chessGroup.setSelectChessArr(selectChessArr);
+			//执行移动
+			executeMove();
+		});
+		
+		function executeMove(){
 			//改变 被选择的棋子位置
 			chessGroup.chessShapeArr.forEach(function(chess, i) {
 				if(chess.isSelect) {
 					chess.moveClass = "move";
 				}
 			});
-		}, delayTime)
+			
+			//监听动画结束事件
+			let firstChess = chessGroup.chessShapeArr[0].el;
+			firstChess.addEventListener(BC.animationEndEvent, moveEnd, false);
 
-		/**
-		 * 得到动画兼容性的css前缀
-		 * @return {String} 前缀
-		 */
-		function getPrefixAnimation() {
-			var testAnimation = document.getElementsByTagName("body")[0].style;
-			let prefixAnimation = "";
-			//检测css3动画兼容性
-			if(typeof testAnimation.animation != "undefined") {
-
-			} else {
-				if(typeof testAnimation.WebkitAnimation != "undefined") {
-					prefixAnimation = "-webkit-";
+			function moveEnd(){
+				firstChess.removeEventListener(BC.animationEndEvent,moveEnd);
+				//运动完成后回调
+				if(callback && typeof callback === 'function') {
+					callback();
 				}
-			}
-			return prefixAnimation;
-		}
-
-		/**
-		 * 添加css规则
-		 * @param {Object} sheet css样式表
-		 * @param {String} selector css
-		 * @param {String} rules css规则
-		 * @param {Number} index
-		 */
-		function addCSSRule(sheet, selector, rules, index) {
-			if("insertRule" in sheet) {
-				sheet.insertRule(selector + "{" + rules + "}", index);
-			} else if("addRule" in sheet) {
-				sheet.addRule(selector, rules, index);
 			}
 		}
 	};

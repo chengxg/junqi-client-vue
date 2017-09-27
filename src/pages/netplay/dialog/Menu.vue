@@ -3,6 +3,12 @@
 		<h4 slot="header" style="">菜单</h4>
 
 		<div class="w3-row menu-cells-wrap">
+			<div v-if="" class="w3-col s3 menu-cell">
+				<div class="w3-card" @click="openDialog('login')">
+					<i class="fa fa-user-o menu-icon"></i>
+					<div class="menu-desc">登录</div>
+				</div>
+			</div>
 			<div v-if="isShowSearchRoom" class="w3-col s3 menu-cell">
 				<div class="w3-card" @click="openDialog('searchRoom')">
 					<i class="fa fa-search menu-icon"></i>
@@ -45,16 +51,16 @@
 					<div class="menu-desc">游戏规则</div>
 				</div>
 			</div>
-			<div v-if="" class="w3-col s3 menu-cell">
-				<div class="w3-card" @click="openDialog('login')">
-					<i class="fa fa-user-o menu-icon"></i>
-					<div class="menu-desc">登录</div>
-				</div>
-			</div>
 			<div v-if="isShowPersonalCenter" class="w3-col s3 menu-cell">
 				<div class="w3-card" @click="openDialog('personalCenter')">
 					<i class="fa fa-address-card-o menu-icon"></i>
 					<div class="menu-desc">用户中心</div>
+				</div>
+			</div>
+			<div v-if="" class="w3-col s3 menu-cell">
+				<div class="w3-card" @click="openDialog('gameSetting')">
+					<i class="fa fa-cog menu-icon"></i>
+					<div class="menu-desc">游戏设置</div>
 				</div>
 			</div>
 		</div>

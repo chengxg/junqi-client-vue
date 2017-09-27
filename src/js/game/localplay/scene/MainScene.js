@@ -35,6 +35,37 @@ function MainScene(mediator) {
 		show: false,
 		duration: 2000
 	};
+	
+	/**
+	 * 该场景的动画实现类型
+	 */
+	this.sceneSetting = {
+		gameAnimation: CON.ANIMATION_TYPE.js,
+		
+		initSceneSetting: function(){
+			let localSceneSettingFormJson = localStorage.getItem("localSceneSettingForm");
+			if(localSceneSettingFormJson) {
+				let form = null;
+				try {
+					form = JSON.parse(localSceneSettingFormJson);
+				} catch(e) {}
+				if(form) {
+					for(let filed in form){
+						if(typeof form[filed] !== 'undefined') {
+							this[filed] = form[filed];
+						}
+					}
+				}
+			}
+		}
+	};
+}
+
+/**
+ * 初始化场景
+ */
+MainScene.prototype.initScene = function() {
+	this.sceneSetting.initSceneSetting();
 }
 
 /**
@@ -59,7 +90,7 @@ MainScene.prototype.initChessboardView = function() {
  * 获取棋子组的焦点
  * @param {ChessGroup} chessGroup 当前操作的chessGroup
  */
-MainScene.prototype.acquireChessGroupFocus = function(chessGroup) {
+MainScene.prototype.acquireChessGroupFocus = function(chessGroup, callback) {
 	let index = this.chessGroupArr.indexOf(chessGroup);
 	if(index > -1) {
 		let that = this;
@@ -70,7 +101,12 @@ MainScene.prototype.acquireChessGroupFocus = function(chessGroup) {
 			//		this.chessGroupArr[len-1] = temp;
 			that.chessGroupArr.splice(index, 1);
 			that.chessGroupArr.push(temp);
-		}, 100);
+			if(callback && typeof callback === 'function'){
+				setTimeout(function(){
+					callback();
+				},20)
+			}
+		}, 40);
 	}
 }
 
@@ -230,9 +266,18 @@ MainScene.prototype.overChessRet = function(overChess) {
 MainScene.prototype.moveChessRet = function(moveChess) {
 	var chessGroup = this.getChessGroupByLoc(moveChess.sl);
 	var targetChessGroup = this.getChessGroupByLoc(moveChess.tl);
+	
 	//棋子移动
-	chessGroup.moveChessUseCss(moveChess.tl, moveChess.p, moveChess.seA, moveEnd);
-
+	var gameAnimationMap = {};
+	gameAnimationMap[CON.ANIMATION_TYPE.css] = "moveChessUseCss";
+	gameAnimationMap[CON.ANIMATION_TYPE.js] = "moveChessUseJs";
+	
+	var moveChessFun = gameAnimationMap[this.sceneSetting.gameAnimation];
+	if(!moveChessFun) {
+		moveChessFun = "moveChessUseJs";
+	}
+	chessGroup[moveChessFun](moveChess.tl, moveChess.p, moveChess.seA, moveEnd);
+	
 	function moveEnd() {
 		chessGroup.setChessGroup(moveChess.sA);
 		chessGroup.selectChessGroup(true);

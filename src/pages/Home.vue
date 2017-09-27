@@ -9,12 +9,13 @@
 <template>
 	<div class="page">
 		<div class="page-layer">
-			<div style="position: absolute;left: 50%;top:20%;transform: translate(-50%, -50%);">
-				<h2>工兵扛军旗</h2>
-				<h6><a href="http://junqi.chengxg.site" class="my-a">http://junqi.chengxg.site</a></h6>
+			<div style="position: absolute;left: 50%;transform: translate(-50%);width: 100%;">
+				<h1><img src="../assets/image/logo.png" style="width: 50px;"/>工兵扛军旗</h1>
+				<img src="../assets/image/gongbing.png" style="width: 100%;"/>
 			</div>
 		</div>
 		<div class="page-layer pointer-events-through">
+			
 			<div class="home-btn-group">
 				<div class="w3-row w3-padding-8">
 					<Vlink href="/localplay">

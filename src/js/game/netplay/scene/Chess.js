@@ -17,6 +17,11 @@ var Chess = (function() {
 			value: chessGroup,
 			enumerable: false
 		});
+		Object.defineProperty(this, "el", {
+			value: null,
+			enumerable: false,
+			writable: true
+		});
 		this.moveClass = "";
 		this.isSelect = false; //是否被选择
 		this.width = CBP.stationW; //棋子的宽度

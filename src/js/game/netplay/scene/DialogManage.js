@@ -83,6 +83,10 @@ var DialogManage = (function() {
 		this.friendRoom = {
 			show: false
 		};
+		//游戏设置
+		this.gameSetting = {
+			show: false
+		};
 		//普通对话框
 		this.dialog = {
 			show: false,

@@ -37,6 +37,7 @@
 			if(!this.$root.state.local.scene) {
 				let mediator = new Mediator();
 				let scene = new MainScene(mediator);
+				scene.initScene();
 				mediator.scene = scene;
 				mediator.initLocalGame();
 				this.$root.state.local.scene = scene;
