@@ -152,5 +152,6 @@
 	
 	.current-tip>div {
 		display: inline-block;
+		vertical-align: middle;
 	}
 </style>

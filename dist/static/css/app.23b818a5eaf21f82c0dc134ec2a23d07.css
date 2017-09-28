@@ -6212,6 +6212,10 @@ html {
 	color: red
 }
 
+.app-icon {
+	border-radius: 20%
+}
+
 .home-btn-group {
 	position: absolute;
 	left: 50%;
@@ -6222,6 +6226,11 @@ html {
 
 .active[data-v-453f807d] {
 	color: #6495ed
+}
+
+.title {
+	font-weight: 700;
+	color: orange
 }
 
 svg .station-text {
@@ -6324,7 +6333,8 @@ svg .station-xingying {
 }
 
 .current-tip>div {
-	display: inline-block
+	display: inline-block;
+	vertical-align: middle
 }
 
 .chessboard-wrap {

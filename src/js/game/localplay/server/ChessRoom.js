@@ -692,7 +692,7 @@ var ChessRoom = (function() {
 			this.timer.init({
 				repeatCount: this.hostPlayerTimeCount,
 				intervalTime: 1000,
-				delayTime: 0,
+				delayTime: 1000,
 				currentCount: 0,
 				timingStartFun: function() {
 					that.hostPlayerTiming();

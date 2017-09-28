@@ -10,7 +10,7 @@
 	<div class="page">
 		<div class="page-layer">
 			<div style="position: absolute;left: 50%;transform: translate(-50%);width: 100%;">
-				<h1><img src="../assets/image/logo.png" style="width: 50px;"/>工兵扛军旗</h1>
+				<h1><img src="../assets/image/logo.png" class="app-icon" style="width: 50px;"/>工兵扛军旗</h1>
 				<img src="../assets/image/gongbing.png" style="width: 100%;"/>
 			</div>
 		</div>

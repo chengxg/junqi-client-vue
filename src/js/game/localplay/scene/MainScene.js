@@ -40,7 +40,7 @@ function MainScene(mediator) {
 	 * 该场景的动画实现类型
 	 */
 	this.sceneSetting = {
-		gameAnimation: CON.ANIMATION_TYPE.js,
+		gameAnimation: CON.ANIMATION_TYPE.css,
 		
 		initSceneSetting: function(){
 			let localSceneSettingFormJson = localStorage.getItem("localSceneSettingForm");
