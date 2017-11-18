@@ -24,7 +24,7 @@
 				</div>
 				<div class="w3-row w3-padding-4">
 					<Vlink href="/netplay">
-						<button class="btn btn-primary" style="width: 100px;">联机对战</button>
+						<button class="btn btn-primary" style="width: 100px;">联网对战</button>
 					</Vlink>
 				</div>
 				<div class="w3-row w3-padding-8">

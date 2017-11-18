@@ -437,7 +437,7 @@ var ChessGroup = (function() {
 		let sum = 0;
 
 		//运动方程 s = A * (1 - Math.cos(ω * t))
-		let T = 400 + len * 20; //运行总时间
+		let T = 300 + len * 20; //运行总时间
 		let A = pathPixelLength / 2; //运动方程振幅
 		let ω = Math.PI / T; //运动方程的频率参数
 

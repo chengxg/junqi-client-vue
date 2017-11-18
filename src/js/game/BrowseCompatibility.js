@@ -21,23 +21,24 @@ var BrowseCompatibility = (function() {
 			'transition': 'transitionend',
 			'OTransition': 'oTransitionEnd',
 			'MozTransition': 'transitionend',
+			'webkitTransition': 'webkitTransitionEnd',
 			'WebkitTransition': 'webkitTransitionEnd'
 		}
 		var animations = {
 			'animation': 'animationend',
-			'OAnimation': 'oAnimationEnd',
-			'MozAnimation': 'animationend',
+			'webkitAnimation': 'webkitAnimationEnd',
 			'WebkitAnimation': 'webkitAnimationEnd'
 		}
 		for(t in transitions) {
 			if(el.style[t] !== undefined) {
-				obj.transitionEvent = transitions[t];
+				obj.transitionEndEvent = transitions[t];
 				break;
 			}
 		}
+		
 		for(t in animations) {
 			if(el.style[t] !== undefined) {
-				obj.animationEvent = animations[t];
+				obj.animationEndEvent = animations[t];
 				break;
 			}
 		}
