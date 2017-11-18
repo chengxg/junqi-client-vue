@@ -8,7 +8,7 @@
   [在线demo http://junqi.chengxg.site](http://junqi.chengxg.site)
 
 # 项目gif截图
-  ![image](https://github.com/chengxg/junqi-client-vue/blob/master/junqi.gif)  
+  ![image](./junqi.gif)  
 
 # 运行项目
 ## 安装依赖
