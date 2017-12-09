@@ -53,7 +53,7 @@ var Mediator = (function() {
 	Mediator.prototype.initLocalGame = function() {
 		this.gameMode = "local";
 		if(!this.rule) {
-			this.rule = rules.rule1;;
+			this.rule = rules.rule1;
 		}
 		if(!this.action) {
 			this.action = new MainAction(this);
@@ -78,27 +78,34 @@ var Mediator = (function() {
 
 	/**
 	 * 游戏开始
-	 * @param {String} palyer1Name 玩家1的名称
-	 * @param {String} palyer2Name 玩家2的名称
+	 * @param {Object} form
 	 */
-	Mediator.prototype.localGameStart = function(palyer1Name, palyer2Name) {
+	Mediator.prototype.localGameStart = function(param) {
 		let socketClient1 = this.sockets.socketClient1,
 			socketClient2 = this.sockets.socketClient2;
-
+		
+		let ruleName = param.ruleName;
+		if(ruleName && rules[ruleName]) {
+			this.rule = rules[ruleName];
+		}
+		
 		socketClient1.emit("login", {
-			n: palyer1Name
+			n: param.player1Name
 		});
 		socketClient2.emit("login", {
-			n: palyer2Name
+			n: param.player2Name
 		});
 
 		let that = this;
+		
 		setTimeout(function() {
-			socketClient1.emit("enterRoom");
-			socketClient2.emit("enterRoom");
-
-			socketClient1.emit("ready");
-			socketClient2.emit("ready");
+			socketClient1.emit("createRoom",{
+				"rule": that.rule.name
+			},function(){
+				socketClient2.emit("enterRoom");
+				socketClient1.emit("ready");
+				socketClient2.emit("ready");
+			});
 		}, 20);
 	}
 

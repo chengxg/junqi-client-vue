@@ -32,6 +32,7 @@
 					<label for="searchModelRule">玩法：</label>
 					<select class="w3-select w3-border" id="searchModelRule" style="width: 100px;" v-model="createRoomForm.rule">
 						<option value="rule1" selected="selected">玩法1</option>
+						<option value="rule2" >玩法2</option>
 					</select>
 				</div>
 			</div>

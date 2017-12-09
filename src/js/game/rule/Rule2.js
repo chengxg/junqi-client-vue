@@ -4,29 +4,29 @@ import BaseRule from './BaseRule'
 import util from './../../util'
 import PathSearch from './PathSearch'
 
-var Rule1 = (function() {
+var Rule2 = (function() {
 
 	/**
-	 * @description 工兵扛军旗玩法1
+	 * @description 工兵扛军旗玩法2
 	 * @author chengxg
 	 * @since 2017-09-01
 	 * @extends {BaseRule}
 	 * @constructor
 	 */
-	function Rule1() {
+	function Rule2() {
 		BaseRule.call(this);
-		this.name = "rule1";
-		this.description = "工兵扛军旗"; //玩法
+		this.name = "rule2";
+		this.description = "工兵夺军旗"; //玩法
 		this.chessTypeKillsMap = {}; //棋子类型杀子map
 		this.init();
 	}
 
-	Rule1.prototype = new BaseRule();
+	Rule2.prototype = new BaseRule();
 
 	/**
 	 * 规则初始化
 	 */
-	Rule1.prototype.init = function() {
+	Rule2.prototype.init = function() {
 		this.extendBaseChessType();
 		this.initChessAttr();
 		this.initKillRule();
@@ -35,57 +35,39 @@ var Rule1 = (function() {
 	/**
 	 * 扩展基础棋子类型
 	 */
-	Rule1.prototype.extendBaseChessType = function() {
-		/**
-		 * 组合棋子类型 ，组合棋子类型有顺序。大大减少冗余
-		 * 组合棋子共5中类型 【排长+炸弹】，【工兵+地雷】，【工兵=军旗】、【工兵+地雷+军旗】、【地雷+军旗】
-		 */
-		let groupChessType = {
-			"pai_zha": 830,
-			"gong_lei": 910,
-			"gong_qi": 922,
-			"gong_lei_qi": 91022,
-			"lei_qi": 1022,
-
-			830: "pai_zha",
-			83030: "pai_zha",
-			910: "gong_lei",
-			91010: "gong_lei",
-			9101010: "gong_lei",
-			922: "gong_qi",
-			91022: "gong_lei_qi",
-			9101022: "gong_lei_qi",
-			910101022: "gong_lei_qi",
-			1010: "lei_qi",
-			101010: "lei_qi",
-			1022: "lei_qi",
-			101022: "lei_qi",
-			10101022: "lei_qi"
-		};
-		util.extend(this.chessType, groupChessType);
+	Rule2.prototype.extendBaseChessType = function() {
+		
 	}
 
 	/**
 	 * 初始化棋子类型属性
 	 */
-	Rule1.prototype.initChessAttr = function() {
+	Rule2.prototype.initChessAttr = function() {
 		this.initBaseChessTypeAttr();
 		let getChessTypeAttr = this.getChessTypeAttr;
 		let chessTypeAttr = this.chessTypeAttr;
 		let ct = this.chessType;
 		let moveType = CON.MOVE_TYPE;
-
-		chessTypeAttr["pai_zha"] = getChessTypeAttr(ct.pai_zha, moveType.oneStep, "");
-		chessTypeAttr["gong_lei"] = getChessTypeAttr(ct.gong_lei, moveType.curve, "");
-		chessTypeAttr["gong_qi"] = getChessTypeAttr(ct.gong_qi, moveType.curve, "");
-		chessTypeAttr["gong_lei_qi"] = getChessTypeAttr(ct.gong_lei_qi, moveType.curve, "");
-		chessTypeAttr["lei_qi"] = getChessTypeAttr(ct.lei_qi, moveType.unable, "");
+		
+		//在铁路线上所有的棋子可以在无阻碍的情况下 直行
+		chessTypeAttr["leader"] = getChessTypeAttr(ct.leader, moveType.line, "司令");
+		chessTypeAttr["jun"] = getChessTypeAttr(ct.jun, moveType.line, "军长");
+		chessTypeAttr["shi"] = getChessTypeAttr(ct.shi, moveType.line, "师长");
+		chessTypeAttr["lv"] = getChessTypeAttr(ct.lv, moveType.line, "旅长");
+		chessTypeAttr["tuan"] = getChessTypeAttr(ct.tuan, moveType.line, "团长");
+		chessTypeAttr["ying"] = getChessTypeAttr(ct.ying, moveType.line, "营长");
+		chessTypeAttr["lian"] = getChessTypeAttr(ct.lian, moveType.line, "连长");
+		chessTypeAttr["pai"] = getChessTypeAttr(ct.pai, moveType.line, "排长");
+		chessTypeAttr["gong"] = getChessTypeAttr(ct.gong, moveType.curve, "工兵");
+		chessTypeAttr["lei"] = getChessTypeAttr(ct.lei, moveType.unable, "地雷");
+		chessTypeAttr["qi"] = getChessTypeAttr(ct.qi, moveType.unable, "军旗");
+		chessTypeAttr["zha"] = getChessTypeAttr(ct.zha, moveType.line, "炸弹");
 	}
 
 	/**
 	 * 初始化杀子规则
 	 */
-	Rule1.prototype.initKillRule = function() {
+	Rule2.prototype.initKillRule = function() {
 		let chessTypeAttr = this.chessTypeAttr;
 		let ct = this.chessType;
 		let kt = CON.KILL_TYPE;
@@ -166,12 +148,8 @@ var Rule1 = (function() {
 			"gong": [
 				[ct.kong, kt.kill],
 				[ct.gong, kt.die],
-				[ct.lei, kt.capture],
-				[ct.qi, kt.capture],
-				[ct.gong_lei, kt.die],
-				[ct.gong_qi, kt.die],
-				[ct.gong_lei_qi, kt.die],
-				[ct.lei_qi, kt.capture]
+				[ct.lei, kt.kill],
+				[ct.qi, kt.kill]
 			],
 			"lei": [],
 			"qi": [],
@@ -184,92 +162,12 @@ var Rule1 = (function() {
 				[ct.tuan, kt.die],
 				[ct.ying, kt.die],
 				[ct.lian, kt.die],
+				[ct.pai, kt.die],
 				[ct.gong, kt.die],
 				[ct.lei, kt.die],
 				[ct.qi, kt.die],
-				[ct.gong_lei, kt.die],
-				[ct.gong_qi, kt.die],
-				[ct.gong_lei_qi, kt.die],
-				[ct.lei_qi, kt.die],
 				[ct.zha, kt.die]
-			],
-			"pai_zha": [
-				[ct.kong, kt.kill],
-				[ct.leader, kt.bomb],
-				[ct.jun, kt.bomb],
-				[ct.shi, kt.bomb],
-				[ct.lv, kt.bomb],
-				[ct.tuan, kt.bomb],
-				[ct.ying, kt.bomb],
-				[ct.lian, kt.bomb],
-				[ct.pai, kt.die],
-				[ct.gong, kt.kill],
-				[ct.lei, kt.bomb],
-				[ct.qi, kt.bomb],
-				[ct.zha, kt.capture],
-
-				[ct.pai_zha, kt.die],
-				[ct.gong_qi, kt.bomb],
-				[ct.gong_lei, kt.bomb],
-				[ct.gong_lei_qi, kt.bomb],
-				[ct.lei_qi, kt.bomb]
-			],
-			"gong_lei": [
-				[ct.kong, kt.kill],
-				[ct.leader, kt.bomb],
-				[ct.jun, kt.bomb],
-				[ct.shi, kt.bomb],
-				[ct.lv, kt.bomb],
-				[ct.tuan, kt.bomb],
-				[ct.ying, kt.bomb],
-				[ct.lian, kt.bomb],
-				[ct.pai, kt.bomb],
-				[ct.gong, kt.die],
-				[ct.lei, kt.capture],
-				[ct.qi, kt.capture],
-
-				[ct.gong_qi, kt.die],
-				[ct.gong_lei, kt.die],
-				[ct.gong_lei_qi, kt.die],
-				[ct.lei_qi, kt.capture]
-			],
-			"gong_qi": [
-				[ct.kong, kt.kill],
-				[ct.leader, kt.kill],
-				[ct.jun, kt.kill],
-				[ct.shi, kt.kill],
-				[ct.lv, kt.kill],
-				[ct.tuan, kt.kill],
-				[ct.ying, kt.kill],
-				[ct.lian, kt.kill],
-				[ct.pai, kt.kill],
-				[ct.gong, kt.die],
-				[ct.lei, kt.capture],
-
-				[ct.gong_qi, kt.die],
-				[ct.gong_lei, kt.die],
-				[ct.gong_lei_qi, kt.die],
-				[ct.lei_qi, kt.capture]
-			],
-			"gong_lei_qi": [
-				[ct.kong, kt.kill],
-				[ct.leader, kt.kill],
-				[ct.jun, kt.kill],
-				[ct.shi, kt.kill],
-				[ct.lv, kt.kill],
-				[ct.tuan, kt.kill],
-				[ct.ying, kt.kill],
-				[ct.lian, kt.kill],
-				[ct.pai, kt.kill],
-				[ct.gong, kt.die],
-				[ct.lei, kt.capture],
-
-				[ct.gong_qi, kt.die],
-				[ct.gong_lei, kt.die],
-				[ct.gong_lei_qi, kt.die],
-				[ct.lei_qi, kt.capture]
-			],
-			"lei_qi": []
+			]
 		};
 		this.chessTypeKillsMap = chessTypeKillsMap;
 		//添加到棋子属性中
@@ -286,7 +184,7 @@ var Rule1 = (function() {
 	 * @param {Array} tarArr 被杀棋子数组
 	 * @return {Object} 返回的结果
 	 */
-	Rule1.prototype.kill = function(souArr, tarArr) {
+	Rule2.prototype.kill = function(souArr, tarArr) {
 		let ct = this.chessType,
 			ca = this.chessTypeAttr;
 		souArr = util.clone(souArr);
@@ -305,28 +203,8 @@ var Rule1 = (function() {
 			"kill": false, //棋子是否可以杀掉
 			"arr": souArr //杀掉目标棋子后，源棋子组
 		};
-		specialKillRule() || normalKillRule();
+		normalKillRule();
 		return ret;
-
-		/**
-		 * 特殊杀子规则 己方的【排长+炸弹】或【工兵+地雷】可以炸掉自己的【地雷】或【军旗】
-		 * @return {Boolean}
-		 */
-		function specialKillRule() {
-			if(isDiffCamp) {
-				return false;
-			}
-			let souIsBomb = [ct.zha, ct.pai_zha, ct.gong_lei, ct.gong_lei_qi].indexOf(souGroupType) > -1;
-			let tarCondition = tarGroupType === ct.lei || tarGroupType === ct.qi;
-
-			if(souIsBomb && tarCondition) {
-				ret.kill = true;
-				throwOneBomb(ret.arr);
-				return true;
-			}
-
-			return false;
-		}
 
 		/**
 		 * 普通杀棋规则
@@ -351,13 +229,6 @@ var Rule1 = (function() {
 						case CON.KILL_TYPE.die:
 							ret.arr = [0];
 							break;
-						case CON.KILL_TYPE.bomb:
-							throwOneBomb(ret.arr);
-							break;
-						case CON.KILL_TYPE.capture:
-							ret.arr = souArr.concat(tarArr);
-							ret.arr = captureSort(ret.arr);
-							break;
 					}
 					return true;
 				}
@@ -378,48 +249,6 @@ var Rule1 = (function() {
 			});
 			return ct[ct[type]];
 		}
-
-		/**
-		 * 捕获棋子，棋子组排序  按照 【工兵】、【地雷】、【军旗】或【排长】、【炸弹】来排序
-		 * @param {Array} chessArr 棋子数组  如：[109,210,210]
-		 * @return {Array} newChessArr 排序后的棋子
-		 */
-		function captureSort(chessArr) {
-			let newChessArr = [];
-			[ct.gong, ct.lei, ct.qi, ct.pai, ct.zha].forEach(function(chessType) {
-				chessArr.forEach(function(chess) {
-					if(chessType === chess % 100) {
-						newChessArr.push(chess);
-					}
-				})
-			})
-			return newChessArr;
-		}
-		/**
-		 * 扔掉一个炸
-		 * @param {Array} srcArr 棋子数组，该棋子组会被改变
-		 * @return {Boolean} 是否扔掉了一个炸
-		 */
-		function throwOneBomb(srcArr) {
-			let bombArr = [ct.lei, ct.zha]; //炸的类型
-			let i = 0,
-				j = 0,
-				srcArrLen = srcArr.length,
-				bombLen = bombArr.length;
-
-			for(i = 0; i < srcArrLen; i++) {
-				for(j = 0; j < bombLen; j++) {
-					if(srcArr[i] % 100 === bombArr[j]) {
-						srcArr.splice(i, 1);
-						if(srcArr.length === 0) {
-							srcArr.push(0);
-						}
-						return true;
-					}
-				}
-			}
-			return false;
-		}
 	}
 
 	/**
@@ -427,7 +256,7 @@ var Rule1 = (function() {
 	 * @param {Array} chessArr 棋子数组  输入[109,210,210] => 910
 	 * @return {Number} 棋子组类型
 	 */
-	Rule1.prototype.getChessType = function(chessArr) {
+	Rule2.prototype.getChessType = function(chessArr) {
 		let type = "";
 		if(chessArr[0] === this.chessType.cover) {
 			return this.chessType.cover;
@@ -443,7 +272,7 @@ var Rule1 = (function() {
 	 * @param {Array} chessArr 棋子数组
 	 * @return {Object} chessAttr 棋子组的属性
 	 */
-	Rule1.prototype.getChessAttr = function(chessArr) {
+	Rule2.prototype.getChessAttr = function(chessArr) {
 		return this.chessTypeAttr[this.chessType[this.getChessType(chessArr)]];
 	}
 
@@ -452,7 +281,7 @@ var Rule1 = (function() {
 	 * @param {Array} chessArr 棋子数组
 	 * @return {Number} 阵营 CON.CAMP
 	 */
-	Rule1.prototype.getChessCamp = function(chessArr) {
+	Rule2.prototype.getChessCamp = function(chessArr) {
 		//第一个棋子的类型就决定了棋子组的阵营
 		let mainChess = chessArr[0];
 		if(mainChess % 100 > 0) {
@@ -470,7 +299,7 @@ var Rule1 = (function() {
 	 * @param {Number} tarLoc 棋子的终止坐标
 	 * @return {Object} 返回结果
 	 */
-	Rule1.prototype.checkMoveChess = function(chessboard, selectArr, souLoc, tarLoc) {
+	Rule2.prototype.checkMoveChess = function(chessboard, selectArr, souLoc, tarLoc) {
 		let ct = this.chessType,
 			ca = this.chessTypeAttr;
 		/**
@@ -629,7 +458,7 @@ var Rule1 = (function() {
 	 * @param {Number} loc 翻开的棋子位置
 	 * @return {Boolean} 结果
 	 */
-	Rule1.prototype.checkOverChess = function(chessboard, loc) {
+	Rule2.prototype.checkOverChess = function(chessboard, loc) {
 		if(chessboard[loc][0] === this.chessType.cover) {
 			return true;
 		}
@@ -643,7 +472,7 @@ var Rule1 = (function() {
 	 * @param {Number} myCamp 我的阵营
 	 * @return {Boolean} 是否可以选择
 	 */
-	Rule1.prototype.checkSelSource = function(chessboard, loc, myCamp) {
+	Rule2.prototype.checkSelSource = function(chessboard, loc, myCamp) {
 		var chessGroupAttr = this.getChessAttr(chessboard[loc]);
 		var chessCamp = this.getChessCamp(chessboard[loc]);
 		var chessMove = chessGroupAttr.moveType;
@@ -661,7 +490,7 @@ var Rule1 = (function() {
 	 * @param {Number} myCamp 我的阵营
 	 * @return {Boolean} 是否可以选择
 	 */
-	Rule1.prototype.checkSelTarget = function(chessboard, loc, myCamp) {
+	Rule2.prototype.checkSelTarget = function(chessboard, loc, myCamp) {
 		var chessGroupAttr = this.getChessAttr(chessboard[loc]);
 		var chessCamp = this.getChessCamp(chessboard[loc]);
 		var chessMove = chessGroupAttr.moveType;
@@ -670,12 +499,11 @@ var Rule1 = (function() {
 		if(chessType === this.chessType.kong) { //此处空子,行琪
 			return true;
 		} else {
-			//杀子 (是自己的棋子但是不能的移动的)
-			if(chessCamp === myCamp && chessMove !== CON.MOVE_TYPE.unable) {
-				//可以炸掉自己的地雷,军旗
-				return false;
-			} else {
+			//杀子
+			if(chessCamp !== myCamp) {
 				return true;
+			} else {
+				return false;
 			}
 		}
 	}
@@ -688,7 +516,7 @@ var Rule1 = (function() {
 	 * @param {Array} createChessArr 棋盘数组的创建数组
 	 * @return {Number}  胜利状态 CON.VICTORY_STATUS
 	 */
-	Rule1.prototype.getVictory = function(chessboard, camp, stepNum, createChessArr) {
+	Rule2.prototype.getVictory = function(chessboard, camp, stepNum, createChessArr) {
 		let VICTORY_STATUS = CON.VICTORY_STATUS,
 			POSITION_GRAPH = CON.POSITION_GRAPH,
 			MOVE_TYPE = CON.MOVE_TYPE;
@@ -699,6 +527,14 @@ var Rule1 = (function() {
 		let rule = this;
 		let ca = this.chessTypeAttr,
 			ct = this.chessType;
+
+		if(!checkHaveJunqi()){
+			if(camp === CON.CAMP.red) {
+				return VICTORY_STATUS.redwin;
+			} else {
+				return VICTORY_STATUS.bluewin;
+			}
+		}
 
 		//对方是否能够移动
 		let oppIsMove = checkOppIsMove();
@@ -715,6 +551,7 @@ var Rule1 = (function() {
 				return VICTORY_STATUS.bluewin;
 			}
 		}
+		
 		//自己没有棋子了,判输
 		if(myChessNum === 0) {
 			if(camp === CON.CAMP.red) {
@@ -725,6 +562,34 @@ var Rule1 = (function() {
 		}
 
 		return VICTORY_STATUS.playing;
+
+		/**
+		 * 检查对方的军旗是否存在
+		 */
+		function checkHaveJunqi() {
+			let oppCamp = CON.getOppositeCamp(camp);
+			let haveJunqi = false;
+			let len = createChessArr.length;
+			for(let i = 0; i < len; i++) {
+				let chess = createChessArr[i];
+				let chessType = rule.getChessType([chess]);
+				if(oppCamp === Math.floor(chess / 100) && chessType === ct.qi) {
+					haveJunqi = true;
+					break;
+				}
+			}
+			if(!haveJunqi){
+				for(let i = 0; i < 60; i++) {
+					let chess = chessboard[i][0];
+					let chessType = rule.getChessType(chessboard[i]);
+					if(oppCamp === Math.floor(chess / 100) && chessType === ct.qi) {
+						haveJunqi = true;
+						break;
+					}
+				}
+			}
+			return haveJunqi;
+		}
 
 		/**
 		 * 统计己方的可移动棋子数量
@@ -793,6 +658,6 @@ var Rule1 = (function() {
 		}
 
 	}
-	return Rule1
+	return Rule2
 })();
-export default Rule1
+export default Rule2

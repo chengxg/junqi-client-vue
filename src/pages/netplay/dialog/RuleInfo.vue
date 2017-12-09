@@ -147,6 +147,45 @@
 				<span class="rule-item-1">7.玩法说明： </span>
 				游戏开始时，系统随机指定一人为先手，玩家轮流进行翻棋或行棋， 轮到自己行棋时，点击自己的棋子即可选择，然后点击目的位置即可完成行棋。 左右滑动组合棋子可查看该组合棋子的棋子组成，在移动组合棋子时也可选择部分棋子进行移动。 一方的行棋时间最长为30s，超时则由另一方进行行棋。
 			</div>
+			
+			<h4>【工兵夺军旗】规则:</h4>
+			<div class="rule-item-wrap">
+				<span class="rule-item-1">简介：</span>
+				此玩法为经典的翻棋玩法（已夺取对方的军旗为目标），只要
+				<span class="rule-span-chess">工兵</span>或
+				<span class="rule-span-chess">炸弹</span>先把对方的
+				<span class="rule-span-chess">地雷</span>排除掉, 然后
+				<span class="rule-span-chess">工兵</span>扛上对方的
+				<span class="rule-span-chess">军旗</span>就赢了
+			</div>
+			<div class="rule-item-wrap">
+				<span class="rule-item-1">1. 杀棋规则： </span>
+				
+				<span class="rule-span-chess">司令</span>>
+				<span class="rule-span-chess">军长</span>>
+				<span class="rule-span-chess">师长</span>>
+				<span class="rule-span-chess">旅长</span>>
+				<span class="rule-span-chess">团长</span>>
+				<span class="rule-span-chess">营长</span>>
+				<span class="rule-span-chess">连长</span>>
+				<span class="rule-span-chess">排长</span>>
+				<span class="rule-span-chess">工兵</span>
+
+				<span class="rule-span-chess">地雷</span>和
+				<span class="rule-span-chess">军旗</span>不能移动，
+
+				<span class="rule-span-chess">炸弹</span>可以移动,也可以进入行营，
+				<span class="rule-span-chess">炸弹</span>与对方的棋子相遇后同时消失。
+			</div>
+			<div class="rule-item-wrap">
+				<span class="rule-item-1">2.行棋规则： </span>
+				<span class="rule-span-chess">工兵</span>
+				可以在铁路线上在没有阻挡的情况下任意行棋；
+				其他棋子在铁路线上走直线； 所有棋子在公路线上只能移动一步。
+			</div>
+			<div class="rule-item-wrap">
+				<span class="rule-item-1">其他规则同【工兵扛军旗】玩法</span>
+			</div>
 		</div>
 	</MyDialog>
 </template>

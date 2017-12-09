@@ -18,15 +18,15 @@
 			<div class="w3-row" style="padding: 5px;">
 				<div class="w3-col s12" style="text-align: left;">
 					<label for="searchModelRule">玩法：</label>
-					<select class="w3-select w3-border" id="searchModelRule" style="width: 100px;" v-model="searchModel.rule">
-						<option value="rule1" selected="selected">玩法1</option>
+					<select class="w3-select w3-border w3-sand" style="width: 100px;" v-model="searchModel.rule">
+						<option v-for="(rule,index) in ruleSelect" :key="index" :value="rule.key">{{rule.value}}</option>
 					</select>
 				</div>
 			</div>
 			<div class="w3-row" style="padding: 5px;">
 				<div class="w3-col s12" style="text-align: right;">
 					<input type="button" class="btn btn-primary" value="查询" @click="searchRoomsNoPage" />
-					<input type="button" class="btn btn-default" value="新建房间" @click="createRoomAction" />
+					<input type="button" class="btn btn-default" value="新建房间" @click="openRoomCreateDialog" />
 				</div>
 			</div>
 		</form>
@@ -85,6 +85,7 @@
 		</div>
 
 		<PlayerInfo :dialog="playerInfoDialog"></PlayerInfo>
+		<RoomCreate :dialog="roomCreateDialog"></RoomCreate>
 	</MyDialog>
 </template>
 
@@ -92,6 +93,7 @@
 	import CON from '@/js/game/ConEnum'
 	import MyDialog from './dialog'
 	import PlayerInfo from './PlayerInfo'
+	import RoomCreate from './RoomCreate'
 	import rules from '@/js/game/rule/rules'
 	let scene = null;
 
@@ -112,11 +114,23 @@
 				playerInfoDialog: {
 					show: false,
 					playerName: null
-				}
+				},
+				roomCreateDialog: {
+					show: false
+				},
+				ruleSelect: []
 			}
 		},
 		props: [],
 		created: function() {
+			for(let filed in rules) {
+				let rule = rules[filed];
+				this.ruleSelect.push({
+					"key": rule.name,
+					"value": rule.description
+				});
+			}
+			
 			this.scene = this.$parent.scene;
 			scene = this.scene;
 
@@ -256,13 +270,17 @@
 				this.playerInfoDialog.show = true;
 				this.playerInfoDialog.playerName = playerName;
 			},
+			openRoomCreateDialog() {
+				this.roomCreateDialog.show = true;
+			},
 			closePlayerInfoDialog() {
 
 			}
 		},
 		components: {
 			MyDialog,
-			PlayerInfo
+			PlayerInfo,
+			RoomCreate
 		}
 	}
 </script>

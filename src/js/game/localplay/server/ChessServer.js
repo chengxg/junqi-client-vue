@@ -35,6 +35,22 @@ var ChessServer = (function() {
 			socket.player = player;
 			player.login();
 		});
+		
+		socket.on('createRoom', function(data,fn) {
+			let player = socket.player;
+			that.leaveRoom(player);
+			let room = that.createRoom();
+			if(data["rule"]) {
+				room.setRoomRule(data["rule"]);
+			}
+			room.distributePlayer(player);
+			if(fn) {
+				fn({
+					success: true
+				});
+			}
+		});
+		
 		socket.on('enterRoom', function(data) {
 			that.leaveRoom(socket.player);
 			if(data && data["rid"]) {

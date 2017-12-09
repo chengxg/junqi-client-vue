@@ -35,6 +35,7 @@ var ChessPlayer = (function() {
 		this.timer = new Timer(name); //定时器
 		this.isSuePeace = false; //玩家是否求和
 		this.lastIsFristHand = true; //玩家先后手
+		
 	}
 	/**
 	 * 玩家类的简写属性对应表

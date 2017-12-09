@@ -580,7 +580,7 @@ var ChessRoom = (function() {
 	ChessRoom.prototype.checkGameOver = function(player) {
 		let isGameOver = false;
 		//判断输赢
-		this.victory = this.rule.getVictory(this.chessboard, player.camp, this.stepNum);
+		this.victory = this.rule.getVictory(this.chessboard, player.camp, this.stepNum, this.createChessArr);
 
 		if(this.victory === CON.VICTORY_STATUS.playing) {
 
