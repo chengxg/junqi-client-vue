@@ -55,6 +55,7 @@
 		props: [],
 		created: function() {
 			this.scene = this.$parent.scene;
+			this.form.ruleName = "rule1";
 			let createRoomFormJson = localStorage.getItem("createRoomForm");
 			if(createRoomFormJson) {
 				let form = null;
@@ -70,8 +71,6 @@
 					}
 					if(form["ruleName"]) {
 						this.form.ruleName = form["ruleName"];
-					}else{
-						this.form.ruleName = "rule1";
 					}
 				}
 			}

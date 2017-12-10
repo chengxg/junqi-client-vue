@@ -141,9 +141,7 @@ var Rule2 = (function() {
 			"pai": [
 				[ct.kong, kt.kill],
 				[ct.pai, kt.die],
-				[ct.gong, kt.kill],
-				[ct.pai_zha, kt.die],
-				[ct.zha, kt.capture]
+				[ct.gong, kt.kill]
 			],
 			"gong": [
 				[ct.kong, kt.kill],
@@ -389,22 +387,12 @@ var Rule2 = (function() {
 			if(CON.POSITION_GRAPH[tarLoc].length === 8) {
 				//行营中有棋子不能再进入,炸弹不能进行营
 				let isKong = tarChessGroupType === ct.kong;
-				let isZha = selChessGroupType === ct.zha;
-				if(isKong && !isZha) {
+				if(isKong) {
 					return true;
 				} else {
 					return false;
 				}
 			}
-			if(CON.POSITION_GRAPH[souLoc].length === 8) {
-				//行营中组合棋子 不能选择一部分
-				if(isSelectPart) {
-					return false;
-				} else {
-					return true;
-				}
-			}
-
 			return true;
 		}
 
