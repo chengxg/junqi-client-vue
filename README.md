@@ -9,6 +9,8 @@
 
 [安卓端安装包  工兵扛军旗.apk](http://junqi.chengxg.site/junqi.apk)
 
+联网对战测试账号: qwe,asd,zxc,fgh 密码均为: 123
+
 # 项目gif截图
   ![image](./junqi.gif)  
 
@@ -18,7 +20,8 @@ npm install
 ## 测试开发
 npm run dev
 输入localhost:3000即可访问
-联网对战测试账号: qwe,asd,zxc,fgh 密码均为: 123
+## 服务器端
+[服务器端项目地址](https://github.com/chengxg/game-server-node)
 ## 打包构建
 npm run build  
 编译后修改 static/css下css文件中的font-face路径，将static修改为“..”
