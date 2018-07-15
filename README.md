@@ -24,7 +24,7 @@ npm run dev
 [服务器端项目地址](https://github.com/chengxg/game-server-node)
 ## 打包构建
 npm run build  
-编译后修改 static/css下css文件中的font-face路径，将static修改为“..”
+编译后修改 static/css下css文件中的font-face路径，将"static/"修改为“../”
 
 # 玩法说明
 ## 【工兵扛军旗】玩法

@@ -6,7 +6,7 @@
 		name: 'app',
 		data: function() {
 			return {
-				
+
 			}
 		},
 		props: ["currentRoute"],

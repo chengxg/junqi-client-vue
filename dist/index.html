@@ -7,12 +7,11 @@
 		<meta name=apple-mobile-web-app-capable content=yes>
 		<title>工兵扛军旗</title>
 		<style id=chessMoveStyle type=text/css>
-			@-webkit-keyframes chess-move {
+			@-webkit-keyframes chess-move{
 				0% {}
 				100% {}
 			}
-			
-			.move {
+			.move{
 				-webkit-animation: chess-move linear 1s;
 				animation: chess-move linear 1s;
 			}
@@ -22,9 +21,25 @@
 
 	<body>
 		<div id=app></div>
-		<script type=text/javascript src=./static/js/manifest.6a781ca00364d480fd98.js></script>
-		<script type=text/javascript src=./static/js/vendor.c98fa07628baeaf8283d.js></script>
-		<script type=text/javascript src=./static/js/app.1b4741e884b687eaa6c9.js></script>
+		<script type=text/javascript>
+			function plusready() {
+				plus.navigator.setStatusBarBackground('#2196F3');
+
+				// Android处理返回键
+				plus.key.addEventListener('backbutton', function() {
+					('iOS' == plus.os.name) ? plus.nativeUI.confirm('确认退出？', function(e) {
+						if(e.index > 0) {
+							plus.runtime.quit();
+						}
+					}, '工兵扛军旗', ['取消', '确定']): (confirm('确认退出？') && plus.runtime.quit());
+				}, false);
+			}
+
+			document.addEventListener('plusready', plusready, false);
+		</script>
+		<script type=text/javascript src=./static/js/manifest.c38e195bfe7510f581f0.js></script>
+		<script type=text/javascript src=./static/js/vendor.53c67f243fe540e36cdf.js></script>
+		<script type=text/javascript src=./static/js/app.f1739414a1fa0620d573.js></script>
 	</body>
 
 </html>

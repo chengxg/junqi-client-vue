@@ -76,3 +76,17 @@ window.addEventListener('focus', () => {
 window.addEventListener('blur', () => {
 	isResize = false;
 }, true)
+
+import conEnum from '@/js/game/ConEnum'
+import axios from 'axios'
+
+//自动请求后台服务器, 以免超过半小时, 后台服务停机
+setInterval(function() {
+	axios.get(conEnum.SERVER_URL.replace("/chess", "/heartbeat"))
+		.then(function(response) {
+			console.log(response);
+		})
+		.catch(function(error) {
+			alert("服务器连接失败!");
+		});
+}, 300000);
