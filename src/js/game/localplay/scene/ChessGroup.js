@@ -578,7 +578,7 @@ var ChessGroup = (function() {
 			} else {
 				chessGroup.selectChessGroup(true);
 			}
-			//gameSound.selectChessSound();
+			gameSound.selectChessSound();
 			chessGroup.scene.hideAllChessGroupSelectChessPanel();
 			chessGroup.scene.cancelAllSelectChessGroup(chessGroup);
 		}

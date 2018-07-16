@@ -82,11 +82,19 @@ import axios from 'axios'
 
 //自动请求后台服务器, 以免超过半小时, 后台服务停机
 setInterval(function() {
+	refreshServer();
+}, 300000);
+refreshServer();
+
+function refreshServer() {
 	axios.get(conEnum.SERVER_URL.replace("/chess", "/heartbeat"))
 		.then(function(response) {
 			console.log(response);
 		})
 		.catch(function(error) {
-			alert("服务器连接失败!");
+			console.log(error);
+			setTimeout(function(){
+				refreshServer();
+			},10000);
 		});
-}, 300000);
+}
