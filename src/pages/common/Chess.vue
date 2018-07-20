@@ -7,8 +7,8 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
-	import CBP from '@/js/game/ChessboardPara'
+	import CON from '@/js/ConEnum'
+	import CBP from '@/js/ChessboardPara'
 
 	export default {
 		name: 'chess',

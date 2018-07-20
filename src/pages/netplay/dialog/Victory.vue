@@ -29,9 +29,13 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
-
+	
+	let scene = null;
+	
 	export default {
 		data: function() {
 			return {
@@ -43,10 +47,10 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
+			scene = store.net.scene;
 
-			let myName = this.scene.mediator.player.name;
-			let player = this.scene.mediator.room.getPlayerByName(myName);
+			let myName = scene.mediator.player.name;
+			let player = scene.mediator.room.getPlayerByName(myName);
 			this.me = player;
 			if(player) {
 				this.victory = player.victory;
@@ -57,23 +61,23 @@
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.victory.show = false;
+				scene.dialogManage.victory.show = false;
 			},
 			continueGame() {
 				this.closeModel();
-				this.scene.dialogManage.roomInfo.show = true;
+				scene.dialogManage.roomInfo.show = true;
 			},
 			cancel() {
 				let that = this;
 
-				this.scene.mediator.action.emit({
+				scene.mediator.action.emit({
 					event: "leaveRoom",
 					data: {
 
 					},
 					success: function(data) {
 						that.closeModel();
-						that.scene.dialogManage.searchRoom.show = true;
+						scene.dialogManage.searchRoom.show = true;
 					}
 				});
 			}

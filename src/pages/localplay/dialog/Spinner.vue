@@ -10,6 +10,10 @@
 	</div>
 </template>
 <script>
+	import store from '@/store'
+	
+	let scene = null;
+	
 	export default {
 		data: function() {
 			return {
@@ -20,8 +24,8 @@
 
 		],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.spinner = this.scene.spinner;
+			scene = store.local.scene;
+			this.spinner = scene.spinner;
 		},
 		computed: {
 

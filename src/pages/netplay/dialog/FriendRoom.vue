@@ -74,9 +74,13 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
-	import rules from '@/js/game/rule/rules'
+	import rules from '@/js/rule/rules'
+
+	let scene = null;
 
 	export default {
 		data: function() {
@@ -98,14 +102,14 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
+			scene = store.net.scene;
 		},
 		computed: {
 
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.friendRoom.show = false;
+				scene.dialogManage.friendRoom.show = false;
 			},
 			back() {
 				this.isShowIndex = true;
@@ -124,7 +128,7 @@
 			},
 			createFriendRoom() {
 				let that = this;
-				this.scene.mediator.action.emit({
+				scene.mediator.action.emit({
 					event: "createRoom",
 					data: {
 						isFriendRoom: true,

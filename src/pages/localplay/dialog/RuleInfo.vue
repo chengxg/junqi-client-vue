@@ -191,8 +191,10 @@
 </template>
 
 <script>
+	import store from '@/store'
 	import MyDialog from './dialog'
 
+	let scene = null;
 	export default {
 		name: 'player-info',
 		data: function() {
@@ -202,11 +204,11 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
+			scene = store.local.scene;
 		},
 		methods: {
 			closeModel: function() {
-				this.scene.dialogManage.ruleInfo.show = false;
+				scene.dialogManage.ruleInfo.show = false;
 			}
 		},
 		components: {

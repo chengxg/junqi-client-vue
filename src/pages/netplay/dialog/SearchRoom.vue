@@ -90,11 +90,15 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
+	import rules from '@/js/rule/rules'
+	
 	import MyDialog from './dialog'
 	import PlayerInfo from './PlayerInfo'
 	import RoomCreate from './RoomCreate'
-	import rules from '@/js/game/rule/rules'
+	
 	let scene = null;
 
 	export default {
@@ -131,8 +135,7 @@
 				});
 			}
 			
-			this.scene = this.$parent.scene;
-			scene = this.scene;
+			scene = store.net.scene;
 
 			this.searchPlayerNum();
 			this.searchRoomsNoPage();

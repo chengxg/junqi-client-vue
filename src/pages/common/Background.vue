@@ -61,8 +61,8 @@
 </style>
 
 <script>
-	import CBP from '@/js/game/ChessboardPara'
-	import CON from '@/js/game/ConEnum'
+	import CBP from '@/js/ChessboardPara'
+	import CON from '@/js/ConEnum'
 
 	export default {
 		data: function() {

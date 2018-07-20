@@ -5,19 +5,21 @@
 </template>
 
 <script>
+	import store from '@/store'
 	import ChessGroupVue from './../common/ChessGroup'
 
 	export default {
 		name: 'chessboard',
 		data: function() {
 			return {
-				scene: null
+				chessGroupArr: []
 			}
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.scene.initChessboardView();
+			let scene = store.net.scene;
+			scene.initChessboardView();
+			this.chessGroupArr = scene.chessGroupArr;
 		},
 		methods: {
 
@@ -26,9 +28,7 @@
 
 		},
 		computed: {
-			chessGroupArr: function() {
-				return this.scene.chessGroupArr;
-			}
+			
 		},
 		components: {
 			ChessGroup: ChessGroupVue

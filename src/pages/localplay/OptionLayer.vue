@@ -1,9 +1,9 @@
 <template>
 	<div class="page-layer">
 		<div class="btn-home">
-			<Vlink href="/">
+			<router-link to="/">
 				<button class="btn btn-default"><i class="fa fa-home self-btn" style="font-size: 1.6em;"></i></button>
-			</Vlink>
+			</router-link>
 		</div>
 		<div class="btn-menu" @click.prevent="openMenu">
 			<button class="btn btn-default"><i class="fa fa-bars self-btn" style="font-size: 1.6em;"></i></button>
@@ -27,9 +27,11 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
-	import Vlink from './../common/Vlink'
-
+	import store from '@/store'
+	import CON from '@/js/ConEnum'
+	
+	let dialogManage = null;
+	
 	export default {
 		data: function() {
 			return {
@@ -38,15 +40,16 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.room = this.scene.mediator.room;
+			let scene = store.local.scene;
+			this.room = scene.mediator.room;
+			dialogManage = scene.dialogManage;
 		},
 		methods: {
 			goHome: function() {
 
 			},
 			openMenu: function() {
-				this.scene.dialogManage.menu.show = true;
+				dialogManage.menu.show = true;
 			}
 		},
 
@@ -112,7 +115,7 @@
 			}
 		},
 		components: {
-			Vlink
+			
 		}
 	}
 </script>

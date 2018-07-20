@@ -21,8 +21,11 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
+	
 	let scene = null;
 
 	export default {
@@ -33,17 +36,17 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
+			scene = store.net.scene;
 		},
 		computed: {
 
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.giveUp.show = false;
+				scene.dialogManage.giveUp.show = false;
 			},
 			ok() {
-				this.scene.mediator.action.emit({
+				scene.mediator.action.emit({
 					event: "giveUp",
 					data: null
 				});

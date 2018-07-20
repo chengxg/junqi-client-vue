@@ -9,8 +9,10 @@
 </template>
 
 <script>
-	import MainScene from '@/js/game/netplay/scene/MainScene'
-	import Mediator from '@/js/game/netplay/Mediator'
+	import store from '@/store'
+
+	import MainScene from '@/js/netplay/MainScene'
+	import Mediator from '@/js/netplay/Mediator'
 
 	import Background from './../common/Background'
 	import OptionLayer from './OptionLayer'
@@ -18,41 +20,30 @@
 	import DialogLayer from './DialogLayer'
 	import MessageLayer from './MessageLayer'
 
-	import CBP from '@/js/game/ChessboardPara'
-	import CON from '@/js/game/ConEnum'
-	import Store from '@/Store'
+	import CBP from '@/js/ChessboardPara'
+	import CON from '@/js/ConEnum'
 
 	export default {
-		name: 'mainscene',
+		name: 'NetPlay',
 		data: function() {
 			return {
 
 			}
 		},
 		props: [],
-		created: function() {
-			if(!this.$root.state.net) {
-				this.$root.state.net = {};
+		beforeCreate: function() {
+			if(!store.net) {
+				store.net = {};
 			}
-			if(!this.$root.state.net.scene) {
+			if(!store.net.scene) {
 				let mediator = new Mediator();
-				let scene = new MainScene(mediator);
-				scene.initScene();
-				mediator.scene = scene;
-				mediator.netServerInit();
-				this.$root.state.net.scene = scene;
+				mediator.initGame();
+				store.net.scene = mediator.scene;
 			}
-			this.scene = this.$root.state.net.scene;
 		},
 		methods: {
-			open2: function() {
 
-			},
-			openMenu: function() {
-				this.showDialog.menu = true;
-			}
 		},
-
 		computed: {
 			styleobj: function() {
 				return {

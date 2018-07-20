@@ -66,8 +66,12 @@
 </style>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
+
+	let scene = null;
 
 	export default {
 		data: function() {
@@ -79,33 +83,33 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.playerChatMsgArr = this.scene.mediator.room.playerChatMsgArr;
-			this.myMsg = this.scene.dialogManage.chat.myMsg;
-			this.myName = this.scene.mediator.player.name;
+			scene = store.net.scene;
+			this.playerChatMsgArr = scene.mediator.room.playerChatMsgArr;
+			this.myMsg = scene.dialogManage.chat.myMsg;
+			this.myName = scene.mediator.player.name;
 		},
 		computed: {
 
 		},
 		destroyed: function() {
-			this.scene.dialogManage.chat.myMsg = this.myMsg;
+			scene.dialogManage.chat.myMsg = this.myMsg;
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.chat.show = false;
+				scene.dialogManage.chat.show = false;
 			},
 			send() {
 				let that = this;
 				if(!this.myMsg) {
-					this.scene.messageCenter.addTipMsg("发送的消息不能为空！");
+					scene.messageCenter.addTipMsg("发送的消息不能为空！");
 					return;
 				}
 				if(this.myMsg.length > 100) {
-					this.scene.messageCenter.addTipMsg("发送的消息不能超过100个字！");
+					scene.messageCenter.addTipMsg("发送的消息不能超过100个字！");
 					return;
 				}
 
-				this.scene.mediator.action.emit({
+				scene.mediator.action.emit({
 					event: "chat",
 					data: {
 						msg: this.myMsg

@@ -37,9 +37,12 @@
 </template>
 
 <script>
-	import rules from '@/js/game/rule/rules'
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	import rules from '@/js/rule/rules'
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
+
+	let scene = null;
 
 	export default {
 		data: function() {
@@ -54,7 +57,8 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
+			scene = store.local.scene;
+			
 			this.form.ruleName = "rule1";
 			let createRoomFormJson = localStorage.getItem("createRoomForm");
 			if(createRoomFormJson) {
@@ -87,13 +91,13 @@
 		},
 		methods: {
 			beforeClose() {
-				this.scene.dialogManage.roomCreate.show = false;
+				scene.dialogManage.roomCreate.show = false;
 				let formJson = JSON.stringify(this.form);
 				localStorage.setItem("createRoomForm", formJson);
 			},
 			createRoom() {
-				if(this.scene && this.scene.mediator) {
-					this.scene.mediator.localGameStart(this.form);
+				if(scene && scene.mediator) {
+					scene.mediator.gameStart(this.form);
 					this.beforeClose();
 				}
 			},

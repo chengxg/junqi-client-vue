@@ -17,6 +17,7 @@
 </template>
 
 <script>
+	import store from '@/store'
 	import NetSpinner from './dialog/Spinner'
 
 	export default {
@@ -27,8 +28,8 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.messageCenter = this.scene.messageCenter;
+			let scene = store.local.scene;
+			this.messageCenter = scene.messageCenter;
 		},
 		methods: {
 

@@ -83,7 +83,9 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
 	import PlayerInfo from './PlayerInfo'
 
@@ -102,8 +104,7 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			scene = this.scene;
+			scene = store.net.scene;
 			this.room = scene.mediator.room;
 		},
 		watch: {

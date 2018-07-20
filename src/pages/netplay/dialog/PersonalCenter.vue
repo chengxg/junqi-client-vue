@@ -229,7 +229,9 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
 	import Timer from '@/js/Timer'
 
@@ -262,12 +264,11 @@
 
 		],
 		created: function() {
-			this.scene = this.$parent.scene;
-			scene = this.scene;
+			scene = store.net.scene;
 
 			if(!scene.mediator.player) {
-				this.scene.dialogManage.personalCenter.show = false;
-				this.scene.dialogManage.login.show = true;
+				scene.dialogManage.personalCenter.show = false;
+				scene.dialogManage.login.show = true;
 				return;
 			}
 			let me = scene.mediator.player;
@@ -281,7 +282,7 @@
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.personalCenter.show = false;
+				scene.dialogManage.personalCenter.show = false;
 			},
 			getErrorMsg(data) {
 				let errMsg = "";

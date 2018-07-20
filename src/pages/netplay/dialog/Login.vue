@@ -143,7 +143,9 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
 	import Timer from '@/js/Timer'
 
@@ -179,8 +181,7 @@
 
 		],
 		created: function() {
-			this.scene = this.$parent.scene;
-			scene = this.scene;
+			scene = store.net.scene;
 
 			let loginFormJson = localStorage.getItem("loginForm");
 			if(loginFormJson) {
@@ -212,7 +213,7 @@
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.login.show = false;
+				scene.dialogManage.login.show = false;
 				let loginForm = {
 					loginUserNameList: this.loginForm.loginUserNameList,
 					lastUserName: this.loginForm.userName,

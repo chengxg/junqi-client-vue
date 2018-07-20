@@ -12,6 +12,8 @@
 </template>
 
 <script>
+	import store from '@/store'
+	
 	import SceneMenu from './dialog/Menu'
 	import RoomCreate from './dialog/RoomCreate'
 	import RoomInfo from './dialog/RoomInfo'
@@ -29,8 +31,8 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.dialogManage = this.scene.dialogManage;
+			let scene = store.local.scene;
+			this.dialogManage = scene.dialogManage;
 		},
 		methods: {
 

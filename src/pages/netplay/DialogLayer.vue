@@ -16,6 +16,8 @@
 </template>
 
 <script>
+	import store from '@/store'
+	
 	import SceneMenu from './dialog/Menu'
 	import RoomInfo from './dialog/RoomInfo'
 	import PlayerInfo from './dialog/PlayerInfo'
@@ -38,8 +40,8 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.dialogManage = this.scene.dialogManage;
+			let scene = store.net.scene;
+			this.dialogManage = scene.dialogManage;
 		},
 		methods: {
 

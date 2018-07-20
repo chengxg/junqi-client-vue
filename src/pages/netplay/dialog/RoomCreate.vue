@@ -24,8 +24,12 @@
 </template>
 
 <script>
+	import store from '@/store'
+	
 	import MyDialog from './dialog'
-	import rules from '@/js/game/rule/rules'
+	import rules from '@/js/rule/rules'
+
+	let scene = null;
 
 	export default {
 		data: function() {
@@ -42,7 +46,7 @@
 			}
 		},
 		created: function() {
-			this.scene = this.$parent.$parent.scene;
+			scene = store.net.scene;
 			for(let filed in rules) {
 				let rule = rules[filed];
 				this.ruleSelect.push({
@@ -69,7 +73,7 @@
 			},
 			createRoomAction() {
 				let that = this;
-				this.scene.mediator.action.emit({
+				scene.mediator.action.emit({
 					event: "createRoom",
 					data: {
 						isFriendRoom: false,
@@ -78,8 +82,8 @@
 					isShowSpinner: true,
 					success: function(data) {
 						if(data["success"]) {
-							that.scene.dialogManage.searchRoom.show = false;
-							that.scene.dialogManage.roomInfo.show = true;
+							scene.dialogManage.searchRoom.show = false;
+							scene.dialogManage.roomInfo.show = true;
 						} else {
 							that.createRoomForm.tipMsg = data["errMsg"];
 						}

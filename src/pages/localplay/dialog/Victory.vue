@@ -19,9 +19,12 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
-
+	
+	let scene = null;
+	
 	export default {
 		data: function() {
 			return {
@@ -33,9 +36,9 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
+			scene = store.local.scene;
 
-			let room = this.scene.mediator.room;
+			let room = scene.mediator.room;
 
 			if(!room.player1 || !room.player2) {
 				this.closeModel();
@@ -58,11 +61,11 @@
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.victory.show = false;
+				scene.dialogManage.victory.show = false;
 			},
 			continueGame() {
 				this.closeModel();
-				this.scene.dialogManage.roomCreate.show = true;
+				scene.dialogManage.roomCreate.show = true;
 			},
 			cancel() {
 				this.closeModel();

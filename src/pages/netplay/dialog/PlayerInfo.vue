@@ -54,8 +54,12 @@
 </template>
 
 <script>
+	import store from '@/store'
+	
 	import MyDialog from './dialog'
-
+	
+	let scene = null;
+	
 	export default {
 		data: function() {
 			return {
@@ -64,7 +68,7 @@
 			}
 		},
 		created: function() {
-			this.scene = this.$parent.$parent.scene;
+			scene = store.net.scene;
 		},
 		props: {
 			dialog: {
@@ -80,7 +84,7 @@
 				let that = this;
 
 				that.errMsgArr = [];
-				this.scene.mediator.action.emit({
+				scene.mediator.action.emit({
 					event: "playerInfo",
 					data: {
 						pn: this.dialog.playerName

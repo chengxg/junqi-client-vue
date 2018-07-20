@@ -19,8 +19,10 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
+	
 	let scene = null;
 
 	export default {
@@ -31,17 +33,17 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
+			scene = store.local.scene;
 		},
 		computed: {
 
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.giveUp.show = false;
+				scene.dialogManage.giveUp.show = false;
 			},
 			ok() {
-				this.scene.mediator.room.hostPlayer.socket.emit(
+				scene.mediator.room.hostPlayer.socket.emit(
 					"giveUp"
 				);
 			},

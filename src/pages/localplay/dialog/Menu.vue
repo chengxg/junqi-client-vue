@@ -38,8 +38,12 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
+
+	let scene = null;
 
 	export default {
 		name: 'menu-scene',
@@ -50,13 +54,13 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.dialogManage = this.scene.dialogManage;
+			scene = store.local.scene;
+			this.dialogManage = scene.dialogManage;
 		},
 		computed: {
 			isShowSearchRoom() {
-				let room = this.scene.mediator.room;
-				let player = this.scene.mediator.player;
+				let room = scene.mediator.room;
+				let player = scene.mediator.player;
 				if(!player) {
 					return false;
 				}
@@ -68,7 +72,7 @@
 				return true;
 			},
 			isShowRoomInfo() {
-				let room = this.scene.mediator.room;
+				let room = scene.mediator.room;
 				if(room) {
 					if(room.id) {
 						return true;
@@ -77,7 +81,7 @@
 				return false;
 			},
 			isShowSuePeace() {
-				let room = this.scene.mediator.room;
+				let room = scene.mediator.room;
 				if(room) {
 					if(room.status === CON.ROOM_STATUS.gameStart) {
 						return true;
@@ -86,7 +90,7 @@
 				return false;
 			},
 			isShowGiveUp() {
-				let room = this.scene.mediator.room;
+				let room = scene.mediator.room;
 				if(room) {
 					if(room.status === CON.ROOM_STATUS.gameStart) {
 						return true;
@@ -95,7 +99,7 @@
 				return false;
 			},
 			isShowPersonalCenter() {
-				let player = this.scene.mediator.player;
+				let player = scene.mediator.player;
 				if(player) {
 					return true;
 				}

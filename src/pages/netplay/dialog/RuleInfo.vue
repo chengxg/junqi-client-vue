@@ -191,6 +191,8 @@
 </template>
 
 <script>
+	import store from '@/store'
+	
 	import MyDialog from './dialog'
 
 	export default {
@@ -202,7 +204,7 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
+			this.scene = store.net.scene;;
 		},
 		methods: {
 			closeModel: function() {

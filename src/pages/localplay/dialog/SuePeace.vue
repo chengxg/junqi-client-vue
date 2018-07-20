@@ -37,8 +37,11 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
+
+	let scene = null;
 
 	export default {
 		data: function() {
@@ -48,19 +51,19 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.suePeace = this.scene.dialogManage.suePeace;
+			scene = store.local.scene;
+			this.suePeace = scene.dialogManage.suePeace;
 		},
 		computed: {
 
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.suePeace.show = false;
+				scene.dialogManage.suePeace.show = false;
 			},
 			okRequest() {
 				let that = this;
-				this.scene.mediator.room.hostPlayer.socket.emit("suePeace", {
+				scene.mediator.room.hostPlayer.socket.emit("suePeace", {
 						iss: true,
 						isr: true
 					},
@@ -72,8 +75,8 @@
 			},
 			okConfirm() {
 				let that = this;
-				let hostPlayer = this.scene.mediator.room.hostPlayer;
-				let oppPlayer = this.scene.mediator.room.getOppositePlayer(hostPlayer);
+				let hostPlayer = scene.mediator.room.hostPlayer;
+				let oppPlayer = scene.mediator.room.getOppositePlayer(hostPlayer);
 				oppPlayer.socket.emit("suePeace", {
 						iss: true,
 						isr: false
@@ -85,8 +88,8 @@
 			},
 			refused() {
 				let that = this;
-				let hostPlayer = this.scene.mediator.room.hostPlayer;
-				let oppPlayer = this.scene.mediator.room.getOppositePlayer(hostPlayer);
+				let hostPlayer = scene.mediator.room.hostPlayer;
+				let oppPlayer = scene.mediator.room.getOppositePlayer(hostPlayer);
 				oppPlayer.socket.emit("suePeace", {
 						iss: false,
 						isr: false

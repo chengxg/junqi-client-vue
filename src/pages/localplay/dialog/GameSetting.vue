@@ -24,9 +24,12 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
-
+	
+	let scene = null;
+	
 	export default {
 		data: function() {
 			return {
@@ -38,7 +41,7 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
+			scene = store.local.scene;
 
 			let localSceneSettingFormJson = localStorage.getItem("localSceneSettingForm");
 			if(localSceneSettingFormJson) {
@@ -60,12 +63,12 @@
 		},
 		methods: {
 			beforeClose() {
-				this.scene.dialogManage.gameSetting.show = false;
+				scene.dialogManage.gameSetting.show = false;
 			},
 			ok() {
 				let formJson = JSON.stringify(this.form);
 				localStorage.setItem("localSceneSettingForm", formJson);
-				this.scene.sceneSetting.initSceneSetting();
+				scene.sceneSetting.initSceneSetting();
 				this.beforeClose();
 			},
 			cancel() {

@@ -1,29 +1,65 @@
+<template>
+	<div id="app" :style="styleobj">
+		<router-view v-if="!isRefresh"></router-view>
+		<Refresh v-if="isRefresh"></Refresh>
+	</div>
+</template>
+
 <script>
-	import CBP from '@/js/game/ChessboardPara'
-	import routes from './routes'
+	import CBP from '@/js/ChessboardPara'
+	import Refresh from './pages/Refresh'
+
+	let data = {
+		styleobj: {
+			width: CBP.clientWidth + "px",
+			height: CBP.clientHeight + "px"
+		},
+		isRefresh: true
+	};
 
 	export default {
 		name: 'app',
 		data: function() {
-			return {
-
-			}
+			return data
 		},
-		props: ["currentRoute"],
-		render: function(h) {
-			return h(this.ViewComponent)
-		},
+		props: [],
 		mounted: function() {
-			this.$parent.$data.isRefresh = false;
+			this.isRefresh = false;
 		},
 		computed: {
-			ViewComponent: function() {
 
-				const matchingView = routes[this.currentRoute]
-				return matchingView ?
-					matchingView :
-					routes["/notfound"]
-			}
-		}
+		},
+		components: {
+			Refresh
+		},
 	}
+
+	let isResize = false;
+	let resizeTimeoutId = 0;
+	//监听浏览器窗口变化
+	window.addEventListener('resize', () => {
+		if(!isResize) {
+			isResize = true;
+			clearTimeout(resizeTimeoutId);
+			resizeTimeoutId = setTimeout(() => {
+				CBP.refresh();
+				data.styleobj = {
+					width: CBP.clientWidth + "px",
+					height: CBP.clientHeight + "px"
+				};
+				data.isRefresh = true;
+				setTimeout(() => {
+					data.isRefresh = false;
+				}, 10);
+				isResize = false;
+			}, 500);
+		}
+	})
+
+	window.addEventListener('focus', () => {
+		isResize = true;
+	}, true)
+	window.addEventListener('blur', () => {
+		isResize = false;
+	}, true)
 </script>

@@ -37,9 +37,13 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
-
+	
+	let scene = null;
+	
 	export default {
 		data: function() {
 			return {
@@ -48,19 +52,19 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			this.suePeace = this.scene.dialogManage.suePeace;
+			scene = store.net.scene;
+			this.suePeace = scene.dialogManage.suePeace;
 		},
 		computed: {
 
 		},
 		methods: {
 			closeModel() {
-				this.scene.dialogManage.suePeace.show = false;
+				scene.dialogManage.suePeace.show = false;
 			},
 			okRequest() {
 				let that = this;
-				this.scene.mediator.action.emit({
+				scene.mediator.action.emit({
 					event: "suePeace",
 					data: {
 						iss: true,
@@ -73,7 +77,7 @@
 			},
 			okConfirm() {
 				let that = this;
-				this.scene.mediator.action.emit({
+				scene.mediator.action.emit({
 					event: "suePeace",
 					data: {
 						iss: true,
@@ -86,7 +90,7 @@
 			},
 			refused() {
 				let that = this;
-				this.scene.mediator.action.emit({
+				scene.mediator.action.emit({
 					event: "suePeace",
 					data: {
 						iss: false,

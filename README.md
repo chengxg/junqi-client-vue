@@ -4,10 +4,14 @@
 # 技术栈
 前端 vue.js + socket.io  
 后台 nodejs + socket.io + leancloud
+
+## 服务器端
+[服务器端项目地址](https://github.com/chengxg/game-server-node)
+
 # 在线demo
 [游戏网址 http://junqi.chengxg.com](http://junqi.chengxg.com)
 [游戏网址2 https://chengxiaogang.gitee.io/junqi](https://chengxiaogang.gitee.io/junqi)
-[安卓端安装包  工兵扛军旗.apk](http://junqi.chengxg.com/junqi.apk)
+[安卓端安装包  工兵扛军旗.apk](https://chengxiaogang.gitee.io/junqi/junqi.apk)
 
 联网对战测试账号: qwe,asd,zxc,fgh 密码均为: 123
 
@@ -23,8 +27,7 @@ npm run dev
 ## 服务器端
 [服务器端项目地址](https://github.com/chengxg/game-server-node)
 ## 打包构建
-npm run build  
-编译后修改 static/css下css文件中的font-face路径，将"static/"修改为“../”
+npm run build
 
 # 玩法说明
 ## 【工兵扛军旗】玩法

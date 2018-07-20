@@ -80,7 +80,8 @@
 </template>
 
 <script>
-	import CON from '@/js/game/ConEnum'
+	import store from '@/store'
+	import CON from '@/js/ConEnum'
 	import MyDialog from './dialog'
 
 	let scene = null;
@@ -98,8 +99,7 @@
 		},
 		props: [],
 		created: function() {
-			this.scene = this.$parent.scene;
-			scene = this.scene;
+			scene = store.local.scene;
 			this.room = scene.mediator.room;
 		},
 		watch: {
