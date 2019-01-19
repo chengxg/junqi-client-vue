@@ -25,7 +25,7 @@
 				<p><span class="title">当前版本：</span>1.6.0</p>
 				<p><span class="title">版本更新：</span>点击游戏网址可获取最新版本</p>
 				<p><span class="title">反馈邮箱：</span>skdcxg@163.com</p>
-				<p><span class="title">版权所有</span>©2017-2018 程小刚</p>
+				<p><span class="title">版权所有</span>©2018-2019 程小刚 孔维宝</p>
 			</div>
 		</div>
 	</div>
